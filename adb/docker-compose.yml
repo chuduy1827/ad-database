@@ -1,0 +1,24 @@
+# MongoDB + Redis + Neo4j (chay tung service tuy lesson)
+# Lesson 1: docker compose -f docker-compose.nosql.yml up -d mongo
+# Lesson 2: docker compose -f docker-compose.nosql.yml up -d redis
+# Lesson 4: docker compose -f docker-compose.nosql.yml up -d neo4j
+services:
+  mongo:
+    image: mongo:8
+    ports: ["27017:27017"]
+    volumes: [mongo-data:/data/db]
+  redis:
+    image: redis:8
+    ports: ["6379:6379"]
+  neo4j:
+    image: neo4j:5
+    ports: ["7474:7474", "7687:7687"]
+    environment:
+      NEO4J_AUTH: neo4j/learnneo4j
+      NEO4J_PLUGINS: '["graph-data-science"]'
+    volumes:
+      - neo4j-data:/data
+      - ./import:/var/lib/neo4j/import
+volumes:
+  mongo-data:
+  neo4j-data:
